@@ -12,7 +12,7 @@ import os
 class CustomGripper(GripperModel):
     def __init__(self):
         super().__init__(
-            fname="hook.xml",  # Path to your gripper XML file
+            fname="hoeok.xml",  # Path to your gripper XML file
             name="custom_gripper"  # Name for your gripper
         )
 

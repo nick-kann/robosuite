@@ -5,7 +5,7 @@ from robosuite.models.grippers.gripper_model import GripperModel
 from robosuite.utils.mjcf_utils import xml_path_completion
 
 
-class WipingGripper(GripperModel):
+class HookGripper(GripperModel):
     """
     A Wiping Gripper with no actuation and enabled with sensors to detect contact forces
 
@@ -14,7 +14,7 @@ class WipingGripper(GripperModel):
     """
 
     def __init__(self, idn=0):
-        super().__init__(xml_path_completion("grippers/wiping_gripper.xml"), idn=idn)
+        super().__init__(xml_path_completion("grippers/hook_gripper.xml"), idn=idn)
 
     def format_action(self, action):
         return action

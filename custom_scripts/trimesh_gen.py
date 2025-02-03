@@ -3,6 +3,7 @@ import trimesh
 from shapes import trimesh_L, trimesh_C, trimesh_ellipse
 
 choice = np.random.randint(1, 4)
+choice = 2
 if choice == 1:
     trimesh_L.generate_hook()
 elif choice == 2:

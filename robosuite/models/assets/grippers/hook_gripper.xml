@@ -1,0 +1,16 @@
+<mujoco model="panda_hand">
+    <asset>
+        <mesh name="hook" file="meshes/hook.stl" />
+
+    </asset>
+    <worldbody>
+        <body name="right_gripper" pos="0 0 0" quat="0.707107 0 0 -0.707107">
+            <body name="hook" pos="0 0 0" quat="1 0 0 0">
+                        <geom type="mesh" mesh="hook" name="custom_hook" material="LinkGrey" rgba="0.7 0.7 0.7 1"/>
+            </body>
+
+        </body>
+    </worldbody>
+
+</mujoco>
+<?xml version='1.0' encoding='utf-8'?>

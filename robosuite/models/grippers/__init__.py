@@ -3,7 +3,7 @@ from .gripper_factory import gripper_factory
 from .gripper_tester import GripperTester
 
 from .panda_gripper import PandaGripper
-from .rethink_gripper import RethinkGripper
+from .hook_gripper import HookGripper
 from .robotiq_85_gripper import Robotiq85Gripper
 from .robotiq_three_finger_gripper import RobotiqThreeFingerGripper, RobotiqThreeFingerDexterousGripper
 from .panda_gripper import PandaGripper
@@ -16,7 +16,7 @@ from .inspire_hands import InspireLeftHand, InspireRightHand
 from .fourier_hands import FourierLeftHand, FourierRightHand
 
 GRIPPER_MAPPING = {
-    "RethinkGripper": RethinkGripper,
+    "HookGripper": HookGripper,
     "PandaGripper": PandaGripper,
     "JacoThreeFingerGripper": JacoThreeFingerGripper,
     "JacoThreeFingerDexterousGripper": JacoThreeFingerDexterousGripper,

@@ -1,8 +1,9 @@
+import os
 import trimesh
 import numpy as np
 import xml.etree.ElementTree as ET
 
-def scene_to_xml(scene, filename="hook.xml"):
+def scene_to_xml(scene, filename="custom_scripts/hook.xml"):
     root = ET.Element("Scene")
 
     for geometry in scene.geometry.values():
@@ -22,14 +23,69 @@ def scene_to_xml(scene, filename="hook.xml"):
     tree.write(filename, encoding="utf-8", xml_declaration=True)
     print(f"C hook saved to {filename}")
 
+
+def generate_mjcf(scene, filename="robosuite/models/assets/robots/ur5e/custom_meshes/hook.xml"):
+    """
+    Convert a trimesh scene to MJCF (MuJoCo XML) format
+
+    Args:
+        scene (trimesh.Scene): Input trimesh scene
+        filename (str): Output MJCF file path
+    """
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+
+    # Create the root MuJoCo element
+    mujoco = ET.Element("mujoco", model="hook_gripper")
+
+    # Create compiler options
+    compiler = ET.SubElement(mujoco, "compiler",
+                             angle="radian",
+                             meshdir="./")
+
+    # Create assets section for mesh definitions
+    assets = ET.SubElement(mujoco, "asset")
+
+    # Export mesh to STL if not already done
+    mesh_filename = filename.replace('.xml', '.stl')
+    scene.export(file_obj=mesh_filename, file_type='stl')
+
+    # Create mesh asset
+    mesh_asset = ET.SubElement(assets, "mesh",
+                               name="hook_mesh",
+                               file=os.path.basename(mesh_filename))
+
+    # Create worldbody section
+    worldbody = ET.SubElement(mujoco, "worldbody")
+
+    # Create a body for the mesh
+    body = ET.SubElement(worldbody, "body", name="hook_body")
+
+    # Create geom for the mesh
+    geom = ET.SubElement(body, "geom",
+                         type="mesh",
+                         mesh="hook_mesh",
+                         name="hook_geom",
+                         group="0",
+                         rgba="1 0 0 1")  # Red color
+
+    # Write the XML file
+    tree = ET.ElementTree(mujoco)
+    tree.write(filename, encoding="utf-8", xml_declaration=True)
+    print(f"MJCF file saved to {filename}")
+
+    return filename
+
+
 def generate_hook():
+    scale = 0.5
     # edit these variables
-    width = np.random.uniform(0.05, 0.5) # [0.05, 0.5]
-    height = np.random.uniform(0.5, 1) # [0.5, 1]
-    length = np.random.uniform(0.5, 1) # [0.5, 1]
-    cylinder_height = np.random.uniform(0.2, 2)
+    width = np.random.uniform(0.05*scale, 0.5*scale) # [0.05, 0.5]
+    height = np.random.uniform(0.5*scale, 1*scale) # [0.5, 1]
+    length = np.random.uniform(0.5*scale, 1*scale) # [0.5, 1]
+    cylinder_height = np.random.uniform(0.2*scale, 2*scale)
     # --------------------
-    cylinder_radius = 0.06
+    cylinder_radius = 0.06*scale
 
     print(f"width = {width}")
     print(f"height = {height}")
@@ -86,7 +142,14 @@ def generate_hook():
     c_cube = c_cube.union(cylinder)
     # add back axis for debugging
     scene = trimesh.Scene([c_cube])
-    scene_to_xml(scene)
+
+    output_stl = "robosuite/models/assets/robots/ur5e/custom_meshes/hook.stl"
+    output_obj = "robosuite/models/assets/robots/ur5e/custom_meshes/hook.obj"
+    output_mjcf = "robosuite/models/assets/robots/ur5e/custom_meshes/hook.xml"
+
+    scene.export(file_obj=output_stl, file_type='stl')
+    scene.export(file_obj=output_obj, file_type='obj')
+    generate_mjcf(scene, output_mjcf)
     print("C hook generated")
 
     scene.show()

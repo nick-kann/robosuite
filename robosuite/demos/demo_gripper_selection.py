@@ -12,9 +12,9 @@ from robosuite import ALL_GRIPPERS
 MAX_FR = 25  # max frame rate for running simluation
 
 if __name__ == "__main__":
-
     for gripper in ALL_GRIPPERS:
-
+        print(gripper)
+    for gripper in ALL_GRIPPERS:
         # Notify user which gripper we're currently using
         print("Using gripper {}...".format(gripper))
 

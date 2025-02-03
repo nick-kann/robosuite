@@ -2,7 +2,7 @@ import trimesh
 import numpy as np
 from shapely.geometry import Polygon
 import xml.etree.ElementTree as ET
-def scene_to_xml(scene, filename="hook.xml"):
+def scene_to_xml(scene, filename="custom_scripts/hoeok.xml"):
     root = ET.Element("Scene")
 
     for geometry in scene.geometry.values():
@@ -113,6 +113,8 @@ def generate_hook():
 
     print("Ellipse hook generated")
     scene_to_xml(scene)
+    output_file = "custom_scripts/hook.stl"
+    scene.export(file_obj=output_file, file_type='stl')
     scene.show()
 
 if __name__ == "__main__":
