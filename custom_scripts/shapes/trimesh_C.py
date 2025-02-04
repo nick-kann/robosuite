@@ -78,12 +78,12 @@ def generate_mjcf(scene, filename="robosuite/models/assets/robots/ur5e/custom_me
 
 
 def generate_hook():
-    scale = 0.5
+    scale = 1
     # edit these variables
     width = np.random.uniform(0.05*scale, 0.5*scale) # [0.05, 0.5]
     height = np.random.uniform(0.5*scale, 1*scale) # [0.5, 1]
     length = np.random.uniform(0.5*scale, 1*scale) # [0.5, 1]
-    cylinder_height = np.random.uniform(0.2*scale, 2*scale)
+    cylinder_height = np.random.uniform(0.2*scale, 1*scale)
     # --------------------
     cylinder_radius = 0.06*scale
 
@@ -141,15 +141,18 @@ def generate_hook():
     # Merge with handle
     c_cube = c_cube.union(cylinder)
     # add back axis for debugging
+
+    # t_cube = trimesh.creation.box(extents=extents)
+
     scene = trimesh.Scene([c_cube])
 
-    output_stl = "robosuite/models/assets/robots/ur5e/custom_meshes/hook.stl"
-    output_obj = "robosuite/models/assets/robots/ur5e/custom_meshes/hook.obj"
-    output_mjcf = "robosuite/models/assets/robots/ur5e/custom_meshes/hook.xml"
+    output_stl = "robosuite/models/assets/grippers/meshes/hook.stl"
+    # output_obj = "robosuite/models/assets/robots/ur5e/custom_meshes/hook.obj"
+    # output_mjcf = "robosuite/models/assets/robots/ur5e/custom_meshes/hook.xml"
 
     scene.export(file_obj=output_stl, file_type='stl')
-    scene.export(file_obj=output_obj, file_type='obj')
-    generate_mjcf(scene, output_mjcf)
+    # t_cube.export(file_obj=output_obj, file_type='obj')
+    # generate_mjcf(t_cube, output_mjcf)
     print("C hook generated")
 
     scene.show()

@@ -27,7 +27,7 @@ def generate_hook():
     length = np.random.uniform(0.2, 1)
     width = np.random.uniform(0.1, 0.5)
     theta = np.random.uniform(30, 90)
-    cylinder_height = np.random.uniform(0.2, 2)
+    cylinder_height = np.random.uniform(0.2, 1)
     # --------------------
 
     print(f"length = {length}")
@@ -100,6 +100,6 @@ def generate_hook():
     scene = trimesh.Scene([hook, cylinder])
     print("L hook generated")
     scene_to_xml(scene)
-    output_file = "custom_scripts/hook.stl"
-    scene.export(file_obj=output_file, file_type='stl')
+    output_stl = "robosuite/models/assets/grippers/meshes/hook.stl"
+    scene.export(file_obj=output_stl, file_type='stl')
     scene.show()

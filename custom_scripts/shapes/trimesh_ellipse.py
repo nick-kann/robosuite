@@ -33,7 +33,7 @@ def generate_hook():
     major = np.random.uniform(0.2, 1)
     minor = np.random.uniform(0.2, 1)
     height = np.random.uniform(0.03, 0.1)
-    cylinder_height = np.random.uniform(0.2, 2)
+    cylinder_height = np.random.uniform(0.2, 1)
     hook_angle = np.random.uniform(-40, -30)
     # --------------------
     cylinder_radius = 0.06
@@ -113,8 +113,8 @@ def generate_hook():
 
     print("Ellipse hook generated")
     scene_to_xml(scene)
-    output_file = "custom_scripts/hook.stl"
-    scene.export(file_obj=output_file, file_type='stl')
+    output_stl = "robosuite/models/assets/grippers/meshes/hook.stl"
+    scene.export(file_obj=output_stl, file_type='stl')
     scene.show()
 
 if __name__ == "__main__":
